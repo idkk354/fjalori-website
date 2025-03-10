@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fjalori Shqip</title>
+    <style>
+        /* Stilet për trupin e faqes */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #71acc0; /* Blu e hapur */
+        }
+        /* Stilimi i kokës së faqes */
+        header {
+            background-color: #4682b4; /* Blu më e errët për kontrast */
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 2em;
+        }
+        /* Kontejneri kryesor */
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        /* Stilimi i kutisë së kërkimit */
+        .search-box {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .search-box input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        .search-box button {
+            padding: 10px 20px;
+            background-color: #4682b4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        .search-box button:hover {
+            background-color: #4169e1; /* Blu e lehtë gjatë lëvizjes së mausit */
+        }
+        /* Rezultatet e kërkimit */
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+            color: #333;
+        }
+        /* Pjesa e fundit e faqes */
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #4682b4;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        /* Seksioni i figurave */
+        .image-section {
+            margin: 40px 0;
+            text-align: center;
+        }
+        .image-section img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        // Funksioni për kërkimin e fjalës në fjalor
+        function searchWord() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const resultDiv = document.getElementById('result');
+            const dictionary = {
+                'liber': 'Shkrim i shtypur që përmban tekste të ndryshme dhe që është i lidhur në një bllok fletësh me kapak.',
+                'shqip': 'Gjuha që flitet nga shqiptarët.',
+                'det': 'Sipërfaqe e madhe uji e kripur.<br>Deti eshte vendi im i preferuar.</br>',
+                'qiell': 'Hapësira e pafundme mbi tokë.',
+                'mal': 'Pjesë e ngritur e tokës me lartësi të madhe.',
+                'lume': 'Rrjedhë natyrore e ujit që shkon drejt detit.',
+                'pyll': 'Sipërfaqe e mbuluar me drurë dhe bimësi të dendur.',
+                'shtepi': 'Ndërtesë e ndërtuar për të banuar.',
+                'shok': 'Person me të cilin kemi marrëdhënie miqësore.',
+                'dashuri': 'Ndjenjë e fortë për dikë ose diçka.',
+                'buke': 'Ushqim i bërë nga brumi i pjekur.',
+                'mesues': 'Person që jep mësim.',
+                'shkolle': 'Institucion arsimor ku zhvillohet mësimi.',
+                'yll': 'Trup qiellor që shndrit në hapësirë.',
+                'dite': 'Koha prej lindjes deri në perëndimin e diellit.',
+                'nate': 'Koha kur dielli ka perënduar.',
+                'mik': 'Person që kemi marrëdhënie të afërta dhe të ngrohta.',
+                'femije': 'Person i vogël në moshë.',
+                'qytet': 'Vendbanim i madh dhe i zhvilluar.',
+                'fshat': 'Vendbanim i vogël në zonat rurale.',
+                'detyre': 'Përgjegjësi ose punë për të kryer.',
+                'zog': 'Shpend i vogël fluturues.',
+                'ajer': 'Gaz që mbush atmosferën dhe që ne e marrim me frymëmarrje.',
+                'peshk': 'Kafshë ujore që jeton në dete ose lumenj.',
+                'diell': 'Ylli që ndriçon dhe ngroh Tokën.',
+                'hene': 'Trupi qiellor që rrotullohet rreth Tokës.',
+                'shendet': 'Gjendja e mirë fizike dhe mendore.',
+                'lule': 'Pjesa e bimës që prodhon fara dhe është e bukur.',
+                'bari': 'Bimë e ulët që mbulon tokën.',
+                'mikpritje': 'Mirësia dhe kujdesi ndaj mysafirëve.',
+                'pune': 'Veprim ose aktivitet që kryhet për një qëllim.',
+                'kohe': 'Masa e kalimit të ngjarjeve.',
+                'shqiponje': 'Shpend grabitqar me flatra të mëdha.',
+                'miqesi': 'Marrëdhënie e ngushtë dhe e ngrohtë me dikë.',
+                'enderr': 'Përjetim mendimesh ose ndjenjash gjatë gjumit.',
+                'shtepiake': 'Punë që kryhet në shtëpi.',
+                'trimeri': 'Guxim përballë vështirësive ose rrezikut.',
+                'bese': 'Fjala e dhënë dhe mbajtja e saj.',
+                'urrejtje': 'Ndjenjë e fuqishme kundër dikujt.',
+                'ndihme': 'Mbështetje ose shërbim për dikë që ka nevojë.',
+                'besim': 'Ndjenjë sigurie dhe bindjeje te dikush ose diçka.',
+                'ndjenje': 'Gjendje emocionale ose shpirtërore.',
+                'toke': 'Planeti ku jetojmë.',
+                'uje': 'Lëngu i qartë dhe i domosdoshëm për jetën.',
+                'kafshe': 'Organizëm i gjallë që nuk është bimë.',
+                'shkop': 'Copë e gjatë dhe e hollë druri.',
+                'enderrim': 'Procesi i mendimeve të imagjinuara.',
+                'abresh': 'abrash; 1. me flokë e vetulla të bardhëme; me lara në trup (për kuaj): <em>Kalë abrash.</em> <br>2. (fig) njeri i prapë, i vrazhdë: <em>Sa cuc abrashe je!</em></br>',  
+                'açajk': 'haptas; kur diçka bëhet haptas, pra pa fshehur asnjë detaj: <em>Dukët açajk ajë gja.</em>',  
+'ahër': 'ahur; vend strehimi për kafshët: <em>Mshele ahrin se na del gjaja jesht.</em>',  
+'akollas': 'rreth e rrotull: <em>Mos shko akollas se na more ment.</em>',  
+'akshaj (t)': 'gjellëbërës; një person që merret me gatimin e gjellëve për shumë veta: <em>Si çki akshaj s’paskemi pa.</em>',  
+'aksham (t)': 'mbrëmje; fjalë e përdorur nga besimi mysliman për vaktin e mbrëmjes: <em>Hecni mrena se u bë aksham.</em>',  
+'allaj (t)': 'lloj përshëndetje e përdorur: <em>Sa të shajfshin, ni allaj t’madhe t’bashin.</em>',  
+'amon': 'aman; përdoret për të përforcuar shprehjen e pakënaqësisë a të qesëndisë: <em>Amon, se na çmene!</em>',  
+'anej': 'andej; nga ajo anë, në atë vend: <em>Ene unë dë jem anej.</em>',  
+'apet': 'përsëri; edhe një herë tjetër, prapë: <em>Apet e bëne kët gabim?!</em>',  
+'asesëj': 'asisoj; as njëra, as tjetra; diçka e papërcaktueshme: <em>Asht ni njeri asesëj.</em>',  
+'asni': 'asnjë; as edhe një njeri, një send etj.: <em>Meta pa asni lek.</em>',  
+'asqeri (t)': 'ushtar; një person që është i aktivizuar në ushtri: <em>Gjyshi em ka qenë asqer n’kohë t’Zogut.</em>',  
+'avdes (t)': 'abdes; rit mysliman që kryhet para faljes: <em>Shkoi me marr avdes para se me u fal.</em>',  
+'Avdeshane': 'banjo; kthinë e vogël me pajisjet për t’u larë: <em>Shko lehu në avdeshane!</em>',  
+'avëjt': 'avit; afoj, e çoj më afër, e sjell më pranë: <em>Avëjtu pak ma knej!</em>',  
+'avllëj': 'avlli; mure rrethuese për oborrin ose një copë toke: <em>Shpit e vjetra n’katun kanë pas gjithmonë avllëj t’nalt.</em>'  
+            };
+
+            // Kontrollo nëse fjala ekziston në fjalor
+            if (dictionary[query]) {
+                resultDiv.innerHTML = '<strong>' + query.charAt(0).toUpperCase() + query.slice(1) + ':</strong> ' + dictionary[query];
+            } else {
+                resultDiv.innerHTML = 'Nuk u gjet asnjë rezultat për: <strong>' + query + '</strong>';
+            }
+        }
+
+        // Lejon kërkimin me butonin "Enter"
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('keyup', (event) => {
+                if (event.key === 'Enter') {
+                    searchWord();
+                }
+            });
+        });
+    </script>
+     <div style="position: absolute; top: 20px; right: 20px;">
+        <a href="multimedia.html" style="color: white; text-decoration: none; font-size: 1em; background: #4169e1; padding: 10px 15px; border-radius: 5px;">
+            Multimedia
+        </a>
+    </div>
+</head>
+<body>
+    <header>
+        Fjalori Shqip
+    </header>
+    <main>
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Kërko një fjalë...">
+            <button onclick="searchWord()">Kërko</button>
+        </div>
+        <div id="result" class="result"></div>
+        <div class="image-section">
+        </div>
+    </main>
+    <footer>
+        &copy; 2024 Fjalori Shqip
+    </footer>
+</body>
+</html>
+
+
+
+
